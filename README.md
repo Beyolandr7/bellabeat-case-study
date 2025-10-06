@@ -68,8 +68,8 @@ Based on the findings, the following recommendations were made to guide Bellabea
 
 3. Run the analyze_data.R script to perform the analysis.
 
-4. Generate the Report:
+#### Generate the Report:
 
-5. Open the bellabeat_report.Rmd file.
+1. Open the bellabeat_report.Rmd file.
 
-6. Click the "Knit" button in RStudio to generate the final HTML report with all visualizations and findings.
+2. Click the "Knit" button in RStudio to generate the final HTML report with all visualizations and findings.
