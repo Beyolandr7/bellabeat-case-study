@@ -1,0 +1,113 @@
+---
+title: "How Smart Device Users Play: Key Insights for Bellabeat's Marketing Strategy, A Case Study for Google Data Analytics Professional Certificate"
+author: "Darren Stanford Soputra"
+date: "2025-10-06"
+output: html_document
+---
+
+```{r libraries, include=FALSE}
+library(tidyverse)
+library(janitor)
+```
+
+```{r Dataset, include=FALSE}
+daily_activity <- read_csv("fitbit/Fitabase Data 4.12.16-5.12.16/dailyActivity_merged.csv")
+```
+
+```{r process and clean data, include=FALSE}
+daily_activity_clean <- daily_activity %>%
+  clean_names() %>% # Standardize column names
+  mutate(activity_date = as.Date(activity_date, format="%m/%d/%Y")) %>% # Format date
+  mutate(day_of_week = wday(activity_date, label=TRUE, week_start=1)) %>% # Add day of week
+  distinct() %>% # Remove any duplicate rows
+  drop_na() # Remove rows with missing values
+```
+
+## 1. Executive Summary
+This report analyzes the daily habits of 30 FitBit users to uncover trends that can inform Bellabeat's marketing strategy. Our analysis reveals three key opportunities for growth:
+
+* Reinforce Core Value: Users clearly connect physical activity (steps) with tangible outcomes (calories burned).
+
+* Targeted Engagement: User activity patterns show a distinct dip during the weekends, presenting an opportunity for motivational content.
+
+* Personalized Messaging: Users exhibit different activity profiles. Many are "workout warriors"—highly active for short periods but sedentary otherwise—who would benefit from reminders to stay lightly active throughout the day.
+
+Based on these findings, we recommend a marketing strategy focused on outcome-based messaging, weekend-specific campaigns, and content that promotes both intense workouts and consistent, light movement.
+
+---
+
+## 2. Key Findings & Recommendations
+### Finding 1: Activity is Directly Tied to Results
+
+Insight: There is a strong, positive correlation between the number of steps a user takes and the number of calories they burn. This confirms that users see a direct return on their effort, a powerful motivator.
+
+Recommendation: Bellabeat's marketing should heavily feature this cause-and-effect relationship. App dashboards and marketing materials should clearly visualize how small increases in daily steps lead to achieving calorie goals. This reinforces the core value proposition of the device.
+
+```{r Finding 1, echo=FALSE}
+ggplot(data = daily_activity_clean, aes(x = total_steps, y = calories)) +
+  geom_point(color = "#6A1B9A", alpha = 0.5) +
+  geom_smooth(method = "lm", se = FALSE, color = "#1E8449") +
+  labs(
+    title = "The More You Move, The More You Burn",
+    x = "Total Daily Steps",
+    y = "Total Daily Calories Burned"
+  ) +
+  theme_minimal(base_size = 14)
+```
+
+### Finding 2: The Weekend Slump is Real
+
+nsight: On average, user activity, as measured by total steps, decreases on Saturday and Sunday. This suggests a drop in routine or motivation during the weekend.
+
+Recommendation: Bellabeat should implement a targeted weekend engagement strategy. This could include:
+
+* Weekend Warrior Challenges: Special badges or rewards for hitting goals on Saturday or Sunday.
+
+* Push Notifications: Friendly morning reminders on the weekend with suggestions for fun activities like a walk in the park or a bike ride.
+
+```{r finding 2, echo=FALSE}
+daily_activity_clean %>%
+  group_by(day_of_week) %>%
+  summarise(avg_steps = mean(total_steps)) %>%
+  ggplot(aes(x = day_of_week, y = avg_steps, fill = day_of_week)) +
+  geom_col() +
+  geom_text(aes(label = round(avg_steps)), vjust = -0.5, size = 4) +
+  labs(
+    title = "Average Daily Steps Decline on Weekends",
+    x = "Day of the Week",
+    y = "Average Steps"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(legend.position = "none")
+```
+
+### Finding 3: The "Workout Warrior" User Profile
+
+Insight: Many users log a high number of "Very Active Minutes" while also having a high number of "Sedentary Minutes." This indicates a common user profile: someone who performs intense, focused exercise but is otherwise inactive for most of the day (e.g., an office worker who goes to the gym).
+
+Recommendation: Bellabeat's content strategy should cater to this profile. Beyond promoting gym workouts, the Bellabeat app and social media can provide value by encouraging users to reduce sedentary time. This includes:
+
+* "Stand Up" Reminders: Gentle notifications to move after long periods of inactivity.
+
+* Content on "Light" Activity: Blog posts or videos about the benefits of short walks, stretching breaks, and other low-intensity movements.
+
+```{r finding 3, echo=FALSE}
+ggplot(data = daily_activity_clean, aes(x = very_active_minutes, y = sedentary_minutes)) +
+  geom_point(aes(color = calories), alpha = 0.7, size = 3) +
+  scale_color_gradient(low = "lightblue", high = "darkblue") +
+  labs(
+    title = "The Workout Warrior: High Activity, High Sedentary Time",
+    x = "Very Active Minutes per Day",
+    y = "Sedentary Minutes per Day",
+    color = "Calories Burned"
+  ) +
+  theme_minimal(base_size = 14)
+```
+---
+
+## 3. Conclusion and Next Steps
+
+The analysis of this external dataset has provided valuable, actionable insights. Bellabeat's marketing strategy can be significantly enhanced by focusing on the clear link between activity and results, engaging users during weekend lulls, and providing content that addresses the need to reduce sedentary time in addition to promoting intense exercise.
+
+**Next Step:** We recommend applying these findings to an analysis of Bellabeat's own user data to confirm these trends and further refine the marketing strategy.
+
