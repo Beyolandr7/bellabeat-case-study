@@ -56,7 +56,7 @@ Based on the findings, the following recommendations were made to guide Bellabea
 
 #### Download the Data:
 
-1. Download the dataset from the Kaggle link.
+1. Download the dataset from the [Kaggle link](https://www.kaggle.com/datasets/arashnic/fitbit).
 
 2. Unzip the file and place the contents in a folder named fitbit in the root of the project directory.
 
