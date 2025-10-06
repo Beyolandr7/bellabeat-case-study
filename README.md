@@ -22,9 +22,11 @@ Data Limitations:
 ## 3. Tools Used
 * R & RStudio: For all data cleaning, transformation, analysis, and visualization.
 * R Packages:
-- tidyverse: A collection of R packages for data science, including ggplot2 (for visualizations) and dplyr (for data manipulation).
-- janitor: For initial data cleaning and standardizing column names.
-- rmarkdown: For creating the final, shareable report.
+  * tidyverse: A collection of R packages for data science, including ggplot2 (for visualizations) and dplyr (for data manipulation).
+
+  * janitor: For initial data cleaning and standardizing column names.
+  
+  * rmarkdown: For creating the final, shareable report.
 
 ## 4. The Analysis Process
 The analysis followed the six steps of the data analysis framework:
